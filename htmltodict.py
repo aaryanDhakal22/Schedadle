@@ -1,18 +1,26 @@
 from os import listdir
 from bs4 import BeautifulSoup
-from pprint import pprint
+from Schedule import Schedule
 
-files = listdir("./schedules")
-for file in files:
-    contents = open("./schedules/" + file, "r").read()
-    soup = BeautifulSoup(contents, "html.parser")
-    all_rows = soup.find_all("tr")[3:]
-    rows_info = []
 
-    for i in all_rows:
-        all_info = i.text.split("\n")
-        all_info = [i for i in all_info if i != ""]
-        print(len(all_info))
-        rows_info.append(all_info)
+def main():
+    files = listdir("./schedules")
+    all_schedules = []
+    for file in files:
+        contents = open("./schedules/" + file, "r").read()
+        soup = BeautifulSoup(contents, "html.parser")
+        all_rows = soup.find_all("tr")[2:]
+        courses = []
 
-    # pprint(rows_info)
+        for i in all_rows:
+            all_info = i.text.split("\n")
+            all_info = [i for i in all_info if i != ""]
+            courses.append(all_info)
+
+        subject = Schedule(courses[0][-1])
+        for course in courses:
+            subject.add_slots(course[8], course[9], course[1])
+            # print(subject)
+
+        all_schedules.append(subject)
+    return all_schedules
