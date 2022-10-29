@@ -2,7 +2,7 @@ class Time(object):
     def __init__(self, time):
         apm, hour, minute = self.break_time(time)
         self.hour = int(hour)
-        if apm.lower() == "pm":
+        if apm.lower() == "pm" and self.hour != 12:
             self.hour += 12
             self.hour = str(self.hour)
 
