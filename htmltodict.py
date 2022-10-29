@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 from Schedule import Schedule
 
 
-def main():
+def subjects():
     files = listdir("./schedules")
     all_schedules = []
     for file in files:
